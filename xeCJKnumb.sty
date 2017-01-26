@@ -1,0 +1,391 @@
+% This is the file CJKnumb.sty of the CJK package
+%   for typesetting numbers with CJK glyphs.
+%
+% created by Werner Lemberg <wl@gnu.org>
+%
+% Version 4.8.4 (18-Apr-2015)
+%
+% XeLaTeX adaptation (xeCJKnumb.sty) 17-Jan-2017 by Adrian Tam <adrian.sw.tam@gmail.com>
+
+% Copyright (C) 1994-2015  Werner Lemberg <wl@gnu.org>
+% Copyright (C) 2017 Adrian Tam <adrian.sw.tam@gmail.com>
+%
+% This program is free software; you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation; either version 2 of the License, or
+% (at your option) any later version.
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with this program in doc/COPYING; if not, write to the Free
+% Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
+% MA 02110-1301 USA
+
+\def\fileversion{4.8.4}
+\def\filedate{2015/04/18}
+\ProvidesPackage{xeCJKnumb}[\filedate\space\fileversion]
+\newif\ifxeCJKnumb@taiwan
+\newif\ifxeCJKnumb@china
+\newif\ifxeCJKnumb@japan
+\newif\ifxeCJKnumb@capital
+\newif\ifxeCJKnumb@japancap
+\DeclareOption{taiwan}{\xeCJKnumb@taiwantrue\xeCJKnumb@chinafalse\xeCJKnumb@japanfalse\xeCJKnumb@capitalfalse\xeCJKnumb@japancapfalse}
+\DeclareOption{china}{\xeCJKnumb@taiwanfalse\xeCJKnumb@chinatrue\xeCJKnumb@japanfalse\xeCJKnumb@capitalfalse\xeCJKnumb@japancapfalse}
+\DeclareOption{japan}{\xeCJKnumb@taiwanfalse\xeCJKnumb@chinafalse\xeCJKnumb@japantrue\xeCJKnumb@capitalfalse\xeCJKnumb@japancapfalse}
+\DeclareOption{capital}{\xeCJKnumb@taiwanfalse\xeCJKnumb@chinafalse\xeCJKnumb@japanfalse\xeCJKnumb@capitaltrue\xeCJKnumb@japancapfalse}
+\DeclareOption{japcap}{\xeCJKnumb@taiwanfalse\xeCJKnumb@chinafalse\xeCJKnumb@japanfalse\xeCJKnumb@capitalfalse\xeCJKnumb@japancaptrue}
+\ExecuteOptions{taiwan}
+\ProcessOptions*
+
+
+% we suppress any unwanted spaces produced by linefeeds.
+
+\endlinechar \m@ne
+
+
+% the amount of space to be inserted before and after the circle
+% representing zero
+
+\def\CJKnullspace{0pt}
+
+
+% generic number macros. We add them to the CJK encoding hooks.
+
+\def\CJK@traditionalNumbers{
+  % circle used for zero
+  \def\CJK@null{\kern\CJKnullspace ０\kern\CJKnullspace}
+  % character used for zero
+  \def\CJK@zero{零}
+  \def\CJK@one{一}
+  \def\CJK@two{二}
+  \def\CJK@three{三}
+  \def\CJK@four{四}
+  \def\CJK@five{五}
+  \def\CJK@six{六}
+  \def\CJK@seven{七}
+  \def\CJK@eight{八}
+  \def\CJK@nine{九}
+  \def\CJK@ten{十}
+  \def\CJK@hundred{百}
+  \def\CJK@thousand{千}
+  \def\CJK@tenthousand{萬}
+  \def\CJK@hundredmillion{億}
+  \def\CJK@minus{負}}
+
+\ifxeCJKnumb@taiwan\CJK@traditionalNumbers\fi
+
+\def\CJK@simplifiedNumbers{
+  \def\CJK@null{\kern\CJKnullspace ０\kern\CJKnullspace}
+  \def\CJK@zero{零}
+  \def\CJK@one{一}
+  \def\CJK@two{二}
+  \def\CJK@three{三}
+  \def\CJK@four{四}
+  \def\CJK@five{五}
+  \def\CJK@six{六}
+  \def\CJK@seven{七}
+  \def\CJK@eight{八}
+  \def\CJK@nine{九}
+  \def\CJK@ten{十}
+  \def\CJK@hundred{百}
+  \def\CJK@thousand{千}
+  \def\CJK@tenthousand{万}
+  \def\CJK@hundredmillion{亿}
+  \def\CJK@minus{负}}
+
+\ifxeCJKnumb@china\CJK@simplifiedNumbers\fi
+
+\def\CJK@japaneseNumbers{
+  \def\CJK@null{\kern\CJKnullspace ０\kern\CJKnullspace}
+  \def\CJK@zero{零}
+  \def\CJK@one{一}
+  \def\CJK@two{二}
+  \def\CJK@three{三}
+  \def\CJK@four{四}
+  \def\CJK@five{五}
+  \def\CJK@six{六}
+  \def\CJK@seven{七}
+  \def\CJK@eight{八}
+  \def\CJK@nine{九}
+  \def\CJK@ten{十}
+  \def\CJK@hundred{百}
+  \def\CJK@thousand{千}
+  \def\CJK@tenthousand{万}
+  \def\CJK@hundredmillion{億}
+  \def\CJK@minus{負}}
+
+\ifxeCJKnumb@japan\CJK@japaneseNumbers\fi
+
+\def\CJK@capitalNumbers{
+  \def\CJK@null{\kern\CJKnullspace ０\kern\CJKnullspace}
+  \def\CJK@zero{零}
+  \def\CJK@one{壹}
+  \def\CJK@two{貳}
+  \def\CJK@three{參}
+  \def\CJK@four{肆}
+  \def\CJK@five{伍}
+  \def\CJK@six{陸}
+  \def\CJK@seven{柒}
+  \def\CJK@eight{捌}
+  \def\CJK@nine{玖}
+  \def\CJK@ten{拾}
+  \def\CJK@hundred{佰}
+  \def\CJK@thousand{仟}
+  \def\CJK@tenthousand{萬}
+  \def\CJK@hundredmillion{億}
+  \def\CJK@minus{負}}
+
+\ifxeCJKnumb@capital\CJK@capitalNumbers\fi
+
+\def\CJK@japaneseCapitalNumbers{
+  \def\CJK@null{\kern\CJKnullspace ０\kern\CJKnullspace}
+  \def\CJK@zero{零}
+  \def\CJK@one{壱}
+  \def\CJK@two{弐}
+  \def\CJK@three{参}
+  \def\CJK@four{四}
+  \def\CJK@five{五}
+  \def\CJK@six{六}
+  \def\CJK@seven{七}
+  \def\CJK@eight{八}
+  \def\CJK@nine{九}
+  \def\CJK@ten{拾}
+  \def\CJK@hundred{百}
+  \def\CJK@thousand{千}
+  \def\CJK@tenthousand{万}
+  \def\CJK@hundredmillion{億}
+  \def\CJK@minus{負}}
+
+\ifxeCJKnumb@japancap\CJK@japaneseCapitalNumbers\fi
+
+
+\newif\ifCJK@zero@
+\newif\ifCJK@previous@
+
+\newif\ifCJK@null@
+
+
+\newcount\CJK@q
+\newcount\CJK@r
+
+
+\def\CJK@digit#1{
+  \ifcase #1\relax
+    \ifCJK@null@ \CJK@null \else \CJK@zero \fi \or
+    \CJK@one \or
+    \CJK@two \or
+    \CJK@three \or
+    \CJK@four \or
+    \CJK@five \or
+    \CJK@six \or
+    \CJK@seven \or
+    \CJK@eight \or
+    \CJK@nine
+  \fi}
+
+
+% This macro splits the number in zzyyyyxxxx (2^^31-1 is the largest
+% possible integer in TeX); zz is \CJK@yi, yyyy is \CJK@high, and
+% xxxx is \CJK@low.
+
+\def\CJK@splitnumber#1{
+  \CJK@q #1
+  \CJK@r #1
+
+  \divide\CJK@q \@M
+  \begingroup
+    \multiply\CJK@q \@M
+    \advance\CJK@r -\CJK@q
+    \ifnum\CJK@r = \z@
+      \xdef\CJK@low{}
+    \else
+      \xdef\CJK@low{\number\CJK@r}
+    \fi
+  \endgroup
+
+  \ifnum\CJK@q > \z@
+    \CJK@r \CJK@q
+
+    \divide\CJK@q \@M
+    \begingroup
+      \multiply\CJK@q \@M
+      \advance\CJK@r -\CJK@q
+      \ifnum\CJK@r = \z@
+        \xdef\CJK@high{}
+      \else
+        \xdef\CJK@high{\number\CJK@r}
+      \fi
+    \endgroup
+
+    \ifnum\CJK@q > \z@
+      \xdef\CJK@yi{\number\CJK@q}
+    \else
+      \xdef\CJK@yi{}
+    \fi
+  \else
+    \xdef\CJK@high{}
+    \xdef\CJK@yi{}
+  \fi
+}
+
+% Here we process four digits
+
+\def\CJK@processnumber#1{
+  \CJK@zero@false
+
+  \CJK@q #1
+  \CJK@r #1
+
+  \divide\CJK@q \@m
+  \ifnum\CJK@q = \z@
+    \ifCJK@previous@
+      \CJK@zero@true
+    \fi
+  \else
+    \ifCJK@zero@
+      \CJK@zero
+    \fi
+    \CJK@digit{\CJK@q}
+    \CJK@thousand
+    \CJK@previous@true
+    \CJK@zero@false
+  \fi
+
+  \multiply\CJK@q \@m
+  \advance\CJK@r -\CJK@q
+  \CJK@q \CJK@r
+
+  \divide\CJK@q 100\relax
+  \ifnum\CJK@q = \z@
+    \ifCJK@previous@
+      \CJK@zero@true
+    \fi
+  \else
+    \ifCJK@zero@
+      \CJK@zero
+    \fi
+    \CJK@digit{\CJK@q}
+    \CJK@hundred
+    \CJK@previous@true
+    \CJK@zero@false
+  \fi
+
+  \multiply\CJK@q 100
+  \advance\CJK@r -\CJK@q
+  \CJK@q \CJK@r
+
+  \divide \CJK@q 10\relax
+  \ifnum\CJK@q = \z@
+    \ifCJK@previous@
+      \CJK@zero@true
+    \fi
+  \else
+    \ifCJK@zero@
+      \CJK@zero
+    \fi
+    \ifnum\CJK@q = \@ne
+      \ifCJK@previous@
+        \CJK@one
+      \fi
+    \else
+      \CJK@digit{\CJK@q}
+    \fi
+    \CJK@ten
+    \CJK@previous@true
+    \CJK@zero@false
+  \fi
+
+  \multiply\CJK@q 10
+  \advance\CJK@r -\CJK@q
+
+  \ifnum\CJK@r = \z@
+  \else
+    \ifCJK@zero@
+      \CJK@zero
+    \fi
+    \CJK@digit{\CJK@r}
+    \CJK@previous@true
+  \fi
+}
+
+
+% this command provides a full CJK representation of a number.
+
+\DeclareRobustCommand\CJKnumber[1]{
+  \CJK@null@false
+
+  \CJK@q #1\relax
+
+  \ifnum\CJK@q < \z@
+    \multiply\CJK@q \m@ne
+    \CJK@minus
+    \CJKkern
+  \fi
+
+  \CJK@previous@false
+  \CJK@zero@false
+
+  \ifnum\CJK@q = \z@
+    \CJK@zero
+  \else
+    \CJK@splitnumber{\CJK@q}
+
+    \ifx\CJK@yi \@empty
+    \else
+      \CJK@processnumber{\CJK@yi}
+      \CJK@hundredmillion
+    \fi
+
+    \ifx\CJK@high \@empty
+    \else
+      \CJK@processnumber{\CJK@high}
+      \CJK@tenthousand
+    \fi
+
+    \ifx\CJK@low \@empty
+    \else
+      \ifx\CJK@yi \@empty
+      \else
+        \ifx\CJK@high \@empty
+          \CJK@zero                 % this catches 100002345
+        \fi
+      \fi
+      \CJK@processnumber{\CJK@low}
+    \fi
+  \fi}
+
+
+% this command simply converts the given string into CJK digits;
+%     the starred version uses the traditional glyph for digit zero.
+
+\DeclareRobustCommand\CJKdigits{
+  \@ifstar{\CJK@null@false\CJK@digits}
+          {\CJK@null@true\CJK@digits}}
+
+\def\CJK@digits#1{
+  {\edef\CJK@tempa{}
+   \edef\CJK@tempb{#1}
+   \ifx\CJK@tempb \@empty
+   \else
+     \loop
+       \expandafter\CJK@getDigit\CJK@tempb\CJK@stop
+       \CJK@digit\CJK@tempa
+       \ifx\CJK@tempb \@empty
+       \else
+     \repeat
+   \fi}}
+
+\def\CJK@getDigit#1#2\CJK@stop{
+  \edef\CJK@tempa{#1}
+  \edef\CJK@tempb{#2}}
+
+
+% reset endline character.
+
+\endlinechar `\^^M
+
+\endinput
